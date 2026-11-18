@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plantillas D64 Carrillo</title>
+<meta name="description" content="Generador de plantillas operativas para WhatsApp. Los datos no salen de tu dispositivo.">
+<meta name="theme-color" content="#0b5cad">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>🚔 Generador de plantillas · D64 Carrillo</h1><button id="th" type="button">🌓 Auto</button></header>
+<main>
+<div class="card"><label style="margin-top:0">Tipo de plantilla</label><select id="tipo"></select></div>
+<div class="card"><div class="g" id="form"></div></div>
+<div class="card">
+<label style="margin-top:0">Vista previa</label>
+<pre id="out"></pre>
+<div class="btns" style="margin-top:10px">
+<button id="cp">📋 Copiar</button>
+<button id="wa">💬 WhatsApp</button>
+<button id="tx" class="s">⬇️ .txt</button>
+<button id="cl" class="s">🧹 Limpiar</button>
+</div>
+<div id="msg"></div>
+</div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
