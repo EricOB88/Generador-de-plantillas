@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plantillas D64</title>
+<style>
+:root{--bg:#f4f6f9;--card:#fff;--tx:#1b2330;--mu:#5d6878;--bd:#d5dbe4;--ac:#0b5cad;--ac2:#fff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151d;--card:#19212c;--tx:#e8edf3;--mu:#98a4b4;--bd:#2d3948;--ac:#4a9eed;--ac2:#06121f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10151d;--card:#19212c;--tx:#e8edf3;--mu:#98a4b4;--bd:#2d3948;--ac:#4a9eed;--ac2:#06121f;color-scheme:dark}
+:root[data-theme="light"]{color-scheme:light}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#th{flex:none;background:rgba(255,255,255,.2);color:inherit;padding:6px 10px;font-size:.85rem}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,sans-serif}
+header{background:var(--ac);color:var(--ac2);padding:12px 14px;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:1.05rem}
+main{max-width:720px;margin:0 auto;padding:12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:12px}
+label{display:block;font-size:.8rem;color:var(--mu);margin:10px 0 3px}
+input,select,textarea{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:76px;resize:vertical}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.g .w{grid-column:1/-1}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+button{flex:1 1 auto;padding:10px 12px;border:0;border-radius:8px;background:var(--ac);color:var(--ac2);font:inherit;font-weight:600;cursor:pointer}
+button.s{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+pre{white-space:pre-wrap;word-wrap:break-word;margin:0;font:.88rem/1.45 ui-monospace,monospace;max-height:50vh;overflow:auto}
+#msg{font-size:.85rem;color:var(--mu);min-height:1.2em;margin-top:6px}
+</style>
+</head>
+<body>
+<header><h1>&#x1F694; Generador de plantillas &#xB7; D64 Carrillo</h1><button id="th" type="button">&#x1F313; Auto</button></header>
+<main>
+<div class="card"><label style="margin-top:0">Tipo de plantilla</label><select id="tipo"></select></div>
+<div class="card"><div class="g" id="form"></div></div>
+<div class="card">
+<label style="margin-top:0">Vista previa</label>
+<pre id="out"></pre>
+<div class="btns" style="margin-top:10px">
+<button id="cp">&#x1F4CB; Copiar</button>
+<button id="wa">&#x1F4AC; WhatsApp</button>
+<button id="tx" class="s">&#x2B07;&#xFE0F; .txt</button>
+<button id="cl" class="s">&#x1F9F9; Limpiar</button>
+</div>
+<div id="msg"></div>
+</div>
+</main>
+<script>
+const DIS=["Sardinal","Playas del Coco","Filadelfia","Bel\u00e9n","Palmira"];
+const F=(k,l,t,o={})=>Object.assign({k,l,t},o);
+const FOOT="\ud83c\udde8\ud83c\uddf7 FUERZA P\u00daBLICA \u2014 DELEGACI\u00d3N DE CARRILLO D-64 \ud83d\ude94";
+const common=[F("fecha","Fecha","d",{e:"\ud83d\udcc6"}),F("hora","Hora","h",{e:"\ud83d\udd70\ufe0f"})];
+const ofic=F("ofic","Oficiales actuantes (uno por l\u00ednea)","a",{e:"\ud83d\udc6e\ud83c\udffb\u200d\u2642\ufe0f",w:1});
+const uni=F("uni","Unidad m\u00f3vil","t",{e:"\ud83d\ude93"});
+const nums=(a)=>a.map(x=>F(x[0],x[1],"n",{f:"l",e:x[2]||""}));
+const ofe=[F("ofn","Ofendido / persona interesada (nombre)","t",{e:"\ud83d\ude4d",w:1}),F("ofc","C\u00e9dula del ofendido / interesado","t"),F("ofnac","Fecha de nacimiento del ofendido / interesado","d")];
+const T={
+droga:{n:"Decomiso de droga",h:"\ud83c\udfdb\ufe0f*PLANTILLA DECOMISO DROGA D64 CARRILLO*",f:[...common,F("dis","Distrito","s",{o:DIS,e:"\ud83d\uddfa\ufe0f"}),F("lug","Lugar del decomiso","t",{e:"\ud83d\uddfe",w:1}),F("imp","Imputado","t",{e:"\ud83d\udc68\ud83c\udffb",w:1}),F("ced","C\u00e9dula","t"),F("nac","Fecha de nacimiento","d"),F("nal","Nacionalidad","t"),F("dec","Decomiso (ej. 05 puchos de marihuana, 01 informe policial)","a",{e:"\ud83d\uddc2\ufe0f",w:1}),ofic,uni]},
+moto:{n:"Decomiso de motocicleta",h:"\ud83c\udfdb\ufe0f*PLANTILLA DECOMISO MOTOCICLETA D64 CARRILLO*",f:[...common,F("lug","Lugar del decomiso","t",{e:"\ud83d\uddfe",w:1}),F("imp","Imputado","t",{e:"\ud83d\udc68\ud83c\udffb",w:1}),F("ced","C\u00e9dula","t"),F("nal","Nacionalidad","t"),...ofe,F("dec","Descripci\u00f3n (marca, estilo, placa, motor)","a",{e:"\ud83d\uddc2\ufe0f",w:1}),F("den","Denuncia OIJ","t",{w:1}),F("dil","Diligencias policiales","a",{w:1}),ofic,uni]},
+apre:{n:"Aprehensi\u00f3n",h:"\u2581 \u2582 \u2584 \u2585 \u2586 CARRILLO \u2586 \u2585 \u2584 \u2582 \u2581\n\u2696\ufe0f *PLANTILLA APREHENSIONES*",f:[F("tipo","Tipo de delito","t",{e:"\u2696\ufe0f",w:1}),...common,F("can","Cant\u00f3n","t",{d:"Carrillo"}),F("dis","Distrito","s",{o:DIS}),F("lug","Lugar exacto","t",{w:1}),F("imp","Nombre imputado","t",{e:"\ud83d\udc65",w:1}),F("ced","C\u00e9dula","t"),F("nac","Fecha de nacimiento","d"),...ofe,F("hap","Hora de aprehensi\u00f3n","h",{e:"\u2696\ufe0f"}),F("des","Breve descripci\u00f3n del evento","a",{w:1,big:1}),F("act","Oficial actuante","t",{w:1}),F("asi","Oficiales asistentes (uno por l\u00ednea)","a",{e:"\ud83d\udc6e\ud83c\udffb\u200d\u2642\ufe0f",w:1}),F("rp","RP","t",{e:"\ud83d\ude93"}),F("fis","Presentado ante Fiscal\u00eda","s",{o:["S\u00ed","No"]}),F("det","Qued\u00f3 detenido","s",{o:["S\u00ed","No"]})]},
+vd:{n:"Violencia dom\u00e9stica (VD)",h:"\u2696\ufe0f *PLANTILLA VIOLENCIA DOM\u00c9STICA* \u2696\ufe0f\n\ud83c\udf96\ufe0f Delta-64 *CARRILLO*",f:[...common,F("can","Cant\u00f3n","t",{d:"Carrillo"}),F("dis","Distrito","s",{o:DIS}),F("lug","Lugar","t",{w:1}),F("imp","Nombre imputado (presunto agresor)","t",{e:"\ud83d\udc65",w:1}),F("ced","C\u00e9dula","t"),F("nac","Fecha de nacimiento","d"),F("dom","Domicilio del imputado","a",{w:1}),F("ofn","Ofendido (nombre)","t",{e:"\ud83d\ude4d",w:1}),F("ofc","C\u00e9dula del ofendido","t"),F("ofnac","Fecha de nacimiento del ofendido","d"),F("del","Delito","t",{e:"\u2696\ufe0f",w:1}),F("ase","Asesor legal","t"),F("fis","Fiscal","t"),F("jue","Juez de familia","t"),F("des","Hechos","a",{w:1,big:1}),ofic,F("rp","RP / unidad m\u00f3vil","t",{e:"\ud83d\ude93"}),F("det","Qued\u00f3 detenido","s",{o:["S\u00ed","No"]})]},
+fall:{n:"Persona fallecida",h:"\u2696\ufe0f *PLANTILLA PERSONA FALLECIDA* \u2696\ufe0f",f:[...common,F("can","Cant\u00f3n","t",{d:"Carrillo"}),F("dis","Distrito","s",{o:DIS}),F("lug","Lugar exacto","t",{e:"\ud83c\udfde",w:1}),F("nom","Nombre del fallecido","t",{e:"\ud83d\udc65",w:1}),F("ced","C\u00e9dula","t",{e:"\ud83d\udcb3"}),F("nac","Fecha de nacimiento","d",{e:"\ud83d\udd8b"}),F("nal","Nacionalidad","t"),F("eda","Edad","t"),...ofe,F("des","Breve descripci\u00f3n del evento","a",{e:"\ud83d\udcdd",w:1,big:1}),ofic,F("cr","Funcionarios Cruz Roja (uno por l\u00ednea)","a",{e:"\ud83d\ude91",w:1}),F("ucr","Unidad Cruz Roja","t"),F("hdec","Hora en que lo declara","h"),F("oij","OIJ (llegada, conductor, m\u00f3vil, juez, fiscal, hora levantamiento)","a",{w:1})]},
+zip:{n:"Resultados ZIP",h:"\ud83d\uded1 *PLANTILLA RESULTADOS FINAL DE ATENCI\u00d3N OPERATIVA DE ZIP D64 CARRILLO* \ud83d\uded1",f:[F("zn","ZIP #","t",{f:"l",e:"\ud83d\udd39"}),F("zd","Sector / distrito del ZIP","t",{f:"l"}),F("fecha","Fecha de atenci\u00f3n","d",{f:"l",e:"\ud83d\udcc5"}),F("hini","Hora inicio","h"),F("hfin","Hora fin","h"),F("dis","Distrito operativo","s",{o:DIS,f:"l",e:"\ud83d\udccd"}),F("sec","Sectores espec\u00edficos de intervenci\u00f3n (uno por l\u00ednea)","a",{e:"\ud83d\udccc",w:1}),F("rec","Recursos: m\u00f3vil y oficiales (uno por l\u00ednea)","a",{e:"\ud83d\ude94",w:1}),...nums([["pa","Personas abordadas"],["pap","AP a personas"],["a88","X88 abordadas"],["p88","AP X88"],["a90","X90 abordados"],["p90","AP X90"],["dm","Decomiso marihuana"],["dc","Decomiso coca\u00edna"],["dk","Decomiso crack"],["da","Decomiso armas"],["d88","Decomiso X88"],["d90","Decomiso X90"],["inf","Informes realizados"],["act","Actas de hallazgo"]]),F("not","Notas","a",{w:1})],foot:1},
+ctrl:{n:"Control vehicular",h:"\ud83d\udd37Carrillo\n\ud83d\udd37Finaliza el control vehicular",pre:"\ud83d\udd37",f:[F("lug","Lugar del control","t",{w:1,f:"l"}),...nums([["pa","Personas abordadas"],["pi","Personas investigadas"],["ca","Carros abordados"],["ci","Carros investigados"],["ma","Motos abordadas"],["mi","Motos investigadas"]]),F("dec","Decomiso de droga u otros (uno por l\u00ednea)","a",{w:1,f:"l"})]},
+nov:{n:"Novedad / abordaje general",h:"\ud83d\udccc*NOVEDAD D64 CARRILLO*",f:[...common,F("dis","Distrito","s",{o:DIS,e:"\ud83d\uddfa\ufe0f"}),F("lug","Lugar","t",{e:"\ud83d\uddfe",w:1}),...ofe,F("des","Descripci\u00f3n","a",{e:"\ud83d\udcdd",w:1,big:1}),ofic,uni]}
+};
+const $=id=>document.getElementById(id);
+const fm=v=>{const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(v);return m?m[3]+"/"+m[2]+"/"+m[1]:v};
+const up=s=>s.toUpperCase();
+let cur="droga",D={};
+function today(){const n=new Date(),p=x=>String(x).padStart(2,"0");return{d:n.getFullYear()+"-"+p(n.getMonth()+1)+"-"+p(n.getDate()),h:p(n.getHours())+":"+p(n.getMinutes())}}
+function load(){try{D=JSON.parse(localStorage.getItem("d64_"+cur)||"{}")}catch(e){D={}}
+ const t=today();T[cur].f.forEach(f=>{if(D[f.k]==null){D[f.k]=f.t==="d"&&/fecha$|^fecha/.test(f.k)&&f.k!=="nac"?t.d:f.t==="h"&&["hora"].includes(f.k)?t.h:f.d||(f.t==="n"?"0":"")}})}
+function save(){try{localStorage.setItem("d64_"+cur,JSON.stringify(D))}catch(e){}}
+function build(){
+ const tp=T[cur];let L=[tp.h,""];
+ tp.f.forEach(f=>{let v=D[f.k];if(v==null||v===""||f.k==="hfin"||f.k==="hini")return;
+  if(f.t==="d")v=fm(v);
+  if(cur==="zip"&&f.k==="fecha"){}
+  const e=f.e?f.e+" ":"",lb=f.l.replace(/ \(.*\)/,"");
+  const pre=tp.pre?tp.pre:"";
+  if(f.f==="l"){
+   if(f.t==="n"&&v.length===1)v="0"+v;
+   if(cur==="zip"&&f.k==="fecha")L.push(e+lb+": "+v,"\u23f0 Hora de ejecuci\u00f3n del ZIP: "+(D.hini||"")+" a "+(D.hfin||"")+" horas");
+   else L.push(pre+e+lb+": "+v);
+   if(["zd","dis"].includes(f.k)||f.k==="fecha"&&cur==="zip")L.push("");
+   if(cur==="zip"&&f.k==="p90"||f.k==="d90")L.push("");
+  }else if(f.t==="a"||f.w&&f.t==="t"&&["lug","imp"].includes(f.k)||f.k==="dec"){
+   L.push("*"+e+up(lb)+"*",v,"");
+  }else L.push("*"+e+up(lb)+":* "+v);
+ });
+ if(tp.foot)L.push("\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501",FOOT);
+ return L.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+}
+function draw(){
+ const box=$("form");box.innerHTML="";
+ T[cur].f.forEach(f=>{
+  if(f.k==="hfin")return;
+  const w=document.createElement("div");if(f.w||f.t==="a")w.className="w";
+  const lab=document.createElement("label");lab.textContent=f.l+(f.k==="hini"?" \u2013 inicio / fin":"");w.appendChild(lab);
+  let i;
+  if(f.t==="a"){i=document.createElement("textarea");if(f.big)i.style.minHeight="130px"}
+  else if(f.t==="s"){i=document.createElement("select");[""].concat(f.o).forEach(o=>{const op=document.createElement("option");op.value=o;op.textContent=o||"\u2014";i.appendChild(op)})}
+  else{i=document.createElement("input");i.type=f.t==="d"?"date":f.t==="h"?"time":f.t==="n"?"number":"text";if(f.t==="n"){i.min=0;i.inputMode="numeric"}}
+  i.value=D[f.k]||"";
+  i.oninput=()=>{D[f.k]=i.value;upd()};i.onchange=i.oninput;
+  w.appendChild(i);box.appendChild(w);
+  if(f.k==="hini"){const j=document.createElement("input");j.type="time";j.value=D.hfin||"";j.style.marginTop="6px";j.oninput=()=>{D.hfin=j.value;upd()};w.appendChild(j)}
+ });
+ upd();
+}
+function upd(){save();$("out").textContent=build()}
+function say(t){$("msg").textContent=t;setTimeout(()=>$("msg").textContent="",2500)}
+$("tipo").innerHTML=Object.keys(T).map(k=>`<option value="${k}">${T[k].n}</option>`).join("");
+$("tipo").onchange=e=>{cur=e.target.value;load();draw()};
+$("cp").onclick=async()=>{const t=build();try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}say("Plantilla copiada \u2705")};
+$("wa").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(build()),"_blank");
+$("tx").onclick=()=>{const b=new Blob(["\ufeff"+build()],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="plantilla_"+cur+"_"+(D.fecha||"").replace(/-/g,"")+".txt";a.click();say("Archivo descargado")};
+let cT;
+$("cl").onclick=()=>{const b=$("cl");
+ if(!b.dataset.ok){b.dataset.ok=1;b.textContent="\u26a0\ufe0f Toca otra vez para borrar";cT=setTimeout(()=>{delete b.dataset.ok;b.textContent="\ud83e\uddf9 Limpiar"},3000);return}
+ clearTimeout(cT);delete b.dataset.ok;b.textContent="\ud83e\uddf9 Limpiar";
+ try{localStorage.removeItem("d64_"+cur)}catch(e){}
+ D={};load();draw();say("Datos borrados \ud83e\uddf9")};
+const TH=["auto","light","dark"],TL={auto:"\ud83c\udf13 Auto",light:"\u2600\ufe0f Claro",dark:"\ud83c\udf19 Oscuro"};
+let th="auto";try{th=localStorage.getItem("d64_theme")||"auto"}catch(e){}
+function setTh(){const r=document.documentElement;if(th==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",th);$("th").textContent=TL[th]}
+$("th").onclick=()=>{th=TH[(TH.indexOf(th)+1)%3];try{localStorage.setItem("d64_theme",th)}catch(e){}setTh()};
+setTh();
+load();draw();
+</script>
+</body>
+</html>
