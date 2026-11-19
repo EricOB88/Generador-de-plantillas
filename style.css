@@ -20,3 +20,4 @@ button{flex:1 1 auto;padding:10px 12px;border:0;border-radius:8px;background:var
 button.s{background:transparent;color:var(--tx);border:1px solid var(--bd)}
 pre{white-space:pre-wrap;word-wrap:break-word;margin:0;font:.88rem/1.45 ui-monospace,monospace;max-height:50vh;overflow:auto}
 #msg{font-size:.85rem;color:var(--mu);min-height:1.2em;margin-top:6px}
+.aviso{max-width:720px;margin:0 auto;padding:4px 14px 28px;font-size:.78rem;line-height:1.4;color:var(--mu);text-align:center}

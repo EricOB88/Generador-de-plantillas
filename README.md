@@ -5,6 +5,7 @@ Generador web de plantillas operativas para cualquier delegación del país: dec
 - Se elige la **provincia, el cantón y el distrito** (división territorial administrativa: 7 provincias, 84 cantones y 492 distritos) y se escribe el nombre de la delegación, que aparece en el encabezado.
 - Se llena el formulario y se copia, se envía por WhatsApp o se descarga como .txt.
 - Todo ocurre en el navegador: lo que se escribe se guarda solo en el dispositivo y no se envía a ningún sitio.
+- **Limpiar** borra la plantilla abierta; **Limpiar todo** borra los datos de todas las plantillas y la delegación.
 - Tema claro, oscuro o automático. Se puede instalar como app (PWA) y funciona sin conexión.
 
 ## Publicar con GitHub Pages
@@ -15,5 +16,10 @@ Generador web de plantillas operativas para cualquier delegación del país: dec
 ## Aviso
 La página es pública. No subas al repositorio datos reales de personas (nombres, cédulas, casos).
 
+El uso de esta información es 100% responsabilidad del usuario. Esta advertencia aparece al final de la app y no se incluye en las plantillas que se copian, envían o descargan.
+
 ## Actualizar la división territorial
 Los cantones y distritos están en `data.js`, una línea por cantón con el formato `Provincia|Cantón|Distrito1,Distrito2`. Si se crea un cantón o distrito nuevo, solo hay que editar esa línea.
+
+## Licencia
+MIT. Consulta el archivo [LICENSE](LICENSE).
